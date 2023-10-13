@@ -5,6 +5,8 @@ import { DefaultSeo } from "next-seo";
 function MyApp({ Component, pageProps }) {
   return (
     <Fragment>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8832630235788265"
+     crossorigin="anonymous"></script>
       <DefaultSeo
         title="Youtube Thumbnail Downloader"
         description="Download high-quality thumbnails from YouTube videos."
