@@ -5,13 +5,28 @@ import axios from 'axios'
 function getYoutubeVideoId(url) {
   try {
     const youtubeUrl = new URL(url);
-    const searchParams = new URLSearchParams(youtubeUrl.search);
-    return searchParams.get("v") || null;
+    let videoId;
+
+    if (youtubeUrl.hostname === "youtu.be") {
+      
+      videoId = youtubeUrl.pathname.substr(1); // Remove leading '/'
+    
+    } else if (youtubeUrl.hostname === "www.youtube.com" && youtubeUrl.searchParams.has("v")) {
+      
+      videoId = youtubeUrl.searchParams.get("v");
+    
+    } else {
+      
+      throw new Error("Invalid YouTube URL");
+    }
+
+    return videoId.trim() !== "" ? videoId : null;
   } catch (error) {
     console.error("Invalid YouTube URL" + error);
     return null;
   }
 }
+
 function Page() {
   const [result, setResult] = useState(null)
   const [link, setLink] = useState(null)
@@ -44,12 +59,12 @@ function Page() {
         </div>
         {
           result && result.formats ? 
-          <div className='flex flex-wrap justify-center'>
-            <div className=''>
+          <div className='flex flex-auto flex-col justify-center '>
+            <div className='flex-raw'>
               <p className='my-5'>{result.title}</p>
               <img className='' src={thumbnailLink} alt="" srcset="" width={640} height={380}/>
             </div>
-            <div className='flex my-5'>
+            <div className='my-5 flex-raw'>
               <a className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 mx-5' href={result.formats[1].url } download target='__blank'>Download Video</a>
               <a className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300' href={thumbnailLink } download target='__blank'>Download thumbnail</a>
             </div>
