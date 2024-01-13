@@ -28,7 +28,7 @@ function Page() {
   const getData = async () => {
     try{
       const response = await axios.request(options);
-      console.log(response)
+      // console.log(response)
       setResult(response.data)
     }
     catch(e){
@@ -36,20 +36,22 @@ function Page() {
     }
   }
   return (
-    <div>
-        <input type="text" onChange={(e) => setLink(e.target.value)} />
-        
-        <button onClick={getData}>get Result</button>
+    <div className='flex justify-center items-center h-screen flex-wrap'> 
+        <div className="flex flex-wrap justify-center">
+          <input className='w-full rounded-md py-1.5 pl-7 pr-20 text-gray-900 ring-1 border-solid border-black border-2  my-3' type="text" onChange={(e) => {setLink(e.target.value); setResult(null)}} />
+          
+          <button className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300' onClick={getData}>Download</button>
+        </div>
         {
           result && result.formats ? 
-          <div>
-            <div>
-              <p>{result.title}</p>
-              <img src={thumbnailLink} alt="" srcset="" width={640} height={380}/>
+          <div className='flex flex-wrap justify-center'>
+            <div className=''>
+              <p className='my-5'>{result.title}</p>
+              <img className='' src={thumbnailLink} alt="" srcset="" width={640} height={380}/>
             </div>
-            <div>
-              <a href={result.formats[1].url } download target='__blank'>Download Video</a>
-              <a href={thumbnailLink } download target='__blank'>Download thumbnail</a>
+            <div className='flex my-5'>
+              <a className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 mx-5' href={result.formats[1].url } download target='__blank'>Download Video</a>
+              <a className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300' href={thumbnailLink } download target='__blank'>Download thumbnail</a>
             </div>
           </div>
           :
