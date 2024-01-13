@@ -1,3 +1,4 @@
+'use client'
 import { useState } from "react";
 import copy from "copy-to-clipboard";
 
@@ -81,3 +82,48 @@ const Index = () => {
 };
 
 export default Index;
+
+// import { useState } from 'react';
+// import axios from 'axios';
+
+// const ThumbnailDownloader = () => {
+//   const [youtubeUrl, setYoutubeUrl] = useState('');
+//   const [thumbnailUrl, setThumbnailUrl] = useState('');
+
+//   const handleDownload = async () => {
+//     // Extract video ID from YouTube URL (you'll need to implement this)
+//     const videoId = extractVideoId(youtubeUrl);
+
+//     // Make API request to YouTube Data API
+//     const apiKey = 'YOUR_YOUTUBE_API_KEY';
+//     const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=snippet`;
+    
+//     try {
+//       const response = await axios.get(apiUrl);
+//       const thumbnailUrl = response.data.items[0].snippet.thumbnails.medium.url;
+//       setThumbnailUrl(thumbnailUrl);
+//     } catch (error) {
+//       console.error('Error fetching data from API:', error);
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <input
+//         type="text"
+//         value={youtubeUrl}
+//         onChange={(e) => setYoutubeUrl(e.target.value)}
+//         placeholder="Enter YouTube URL"
+//       />
+//       <button onClick={handleDownload}>Download Thumbnail</button>
+//       {thumbnailUrl && (
+//         <div>
+//           <img src={thumbnailUrl} alt="Thumbnail" />
+//           <a href={thumbnailUrl} download>Download Thumbnail</a>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default ThumbnailDownloader;

@@ -1,20 +1,21 @@
 {
-  "name": "youtube-thumbnail-downloader",
-  "version": "1.0.0",
+  "name": "new_next",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "next",
+    "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "next": "latest",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "copy-to-clipboard": "^3.3.1",
-    "next-seo": "^4.7.3",
-    "tailwindcss": "^2.2.19",
-    "postcss-flexbugs-fixes": "^5.0.2",
-    "postcss-preset-env": "^7.0.1"
-  },
-  "license": "MIT"
+    "axios": "^1.5.0",
+    "copy-to-clipboard": "^3.3.3",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "next": "13.4.11",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "ytdl-core": "^4.11.5"
+  }
 }
