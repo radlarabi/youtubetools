@@ -9,7 +9,7 @@ function getYoutubeVideoId(url) {
 
     if (youtubeUrl.hostname === "youtu.be") {
       
-      videoId = youtubeUrl.pathname.substr(1); // Remove leading '/'
+      videoId = youtubeUrl.pathname.substr(1);
     
     } else if (youtubeUrl.hostname === "www.youtube.com" && youtubeUrl.searchParams.has("v")) {
       
@@ -43,7 +43,7 @@ function Page() {
   const getData = async () => {
     try{
       const response = await axios.request(options);
-      // console.log(response)
+      console.log(response)
       setResult(response.data)
     }
     catch(e){
@@ -55,18 +55,19 @@ function Page() {
         <div className="flex flex-wrap justify-center">
           <input className='w-full rounded-md py-1.5 pl-7 pr-20 text-gray-900 ring-1 border-solid border-black border-2  my-3' type="text" onChange={(e) => {setLink(e.target.value); setResult(null)}} />
           
-          <button className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300' onClick={getData}>Download</button>
+          <button className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-300' onClick={getData}>Download</button>
         </div>
         {
           result && result.formats ? 
-          <div className='flex flex-auto flex-col justify-center '>
+          <div className='flex flex-col justify-center '>
             <div className='flex-raw'>
               <p className='my-5'>{result.title}</p>
               <img className='' src={thumbnailLink} alt="" srcset="" width={640} height={380}/>
             </div>
-            <div className='my-5 flex-raw'>
-              <a className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 mx-5' href={result.formats[1].url } download target='__blank'>Download Video</a>
-              <a className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300' href={thumbnailLink } download target='__blank'>Download thumbnail</a>
+            <div className='flex flex-col my-3 justify-center'>
+              <a className='bg-blue-500 text-white px-4 py-2 my-2 w-fit rounded-lg hover:bg-blue-600 focus:outline-none focus:border-blue-300' href={result.formats[1].url } download target='__blank'>Download Video</a>
+              <a className='bg-blue-500 text-white px-4 py-2 my-2 w-fit rounded-lg hover:bg-blue-600 focus:outline-none focus:border-blue-300' href={result.adaptiveFormats[15].url } download target='__blank'>Download Audio</a>
+              <a className='bg-blue-500 text-white px-4 py-2 my-2 w-fit rounded-lg hover:bg-blue-600 focus:outline-none focus:border-blue-300' href={thumbnailLink } download target='__blank'>Download thumbnail</a>
             </div>
           </div>
           :
