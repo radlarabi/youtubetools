@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import React from 'react'
 import axios from 'axios'
+
 function getYoutubeVideoId(url) {
   try {
     const youtubeUrl = new URL(url);
@@ -25,6 +26,18 @@ function getYoutubeVideoId(url) {
     console.error("Invalid YouTube URL" + error);
     return null;
   }
+}
+
+function getAudioUrl(result){
+  const len = result.adaptiveFormats.length;
+  const format = result.adaptiveFormats
+  let i = 0
+  while(i < len){
+    if (format[i].audioQuality == "AUDIO_QUALITY_MEDIUM")
+      return format[i].url;
+    i++;
+  }
+  return "youtubetools.vercel.app"
 }
 
 function Page() {
@@ -65,9 +78,14 @@ function Page() {
               <img className='' src={thumbnailLink} alt="" srcset="" width={640} height={380}/>
             </div>
             <div className='flex flex-col my-3 justify-center'>
-              <a className='bg-blue-500 text-white px-4 py-2 my-2 w-fit rounded-lg hover:bg-blue-600 focus:outline-none focus:border-blue-300' href={result.formats[1].url } download target='__blank'>Download Video</a>
-              <a className='bg-blue-500 text-white px-4 py-2 my-2 w-fit rounded-lg hover:bg-blue-600 focus:outline-none focus:border-blue-300' href={result.adaptiveFormats[15].url } download target='__blank'>Download Audio</a>
-              <a className='bg-blue-500 text-white px-4 py-2 my-2 w-fit rounded-lg hover:bg-blue-600 focus:outline-none focus:border-blue-300' href={thumbnailLink } download target='__blank'>Download thumbnail</a>
+              <a className='bg-blue-500 text-white px-4 py-2 my-2 w-fit rounded-lg hover:bg-blue-600 focus:outline-none focus:border-blue-300' 
+                href={result.formats[1].url } download target='__blank'>Download Video</a>
+
+              <a className='bg-blue-500 text-white px-4 py-2 my-2 w-fit rounded-lg hover:bg-blue-600 focus:outline-none focus:border-blue-300' 
+                href={getAudioUrl(result)} download target='__blank'>Download Audio</a>
+
+              <a className='bg-blue-500 text-white px-4 py-2 my-2 w-fit rounded-lg hover:bg-blue-600 focus:outline-none focus:border-blue-300' 
+                href={thumbnailLink } download target='__blank'>Download thumbnail</a>
             </div>
           </div>
           :
