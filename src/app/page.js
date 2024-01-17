@@ -2,7 +2,11 @@
 
 import { useState } from 'react'
 import axios from 'axios'
-import Page from './api/page'
+import Image from 'next/image';
+import FacebookIcon from '../assets/svg/facebook.svg'
+import InstagramIcon from '../assets/svg/instagram.svg'
+import YoutubeIcon from '../assets/svg/youtube.svg'
+
 export default function Home() {
   const [result, setResult] = useState(null)
   const getData = () => {
@@ -12,7 +16,27 @@ export default function Home() {
   }
   return (
     <main>
-      <Page />
+      <a href='/Facebook'>
+        <Image 
+          height={50}
+          width={50}
+          src={FacebookIcon} 
+        />
+      </a>
+      <a href='/Youtube'>
+        <Image 
+          height={55}
+          width={50}
+          src={YoutubeIcon} 
+        />
+      </a>
+      <a href='/Instagram'>
+        <Image 
+          height={50}
+          width={50}
+          src={InstagramIcon} 
+        />
+      </a>
     </main>
   )
 }

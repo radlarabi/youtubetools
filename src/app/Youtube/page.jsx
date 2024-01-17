@@ -40,7 +40,7 @@ function getAudioUrl(result){
   return "youtubetools.vercel.app"
 }
 
-function Page() {
+function Youtube() {
   const [result, setResult] = useState(null)
   const [link, setLink] = useState(null)
   const thumbnailLink = `https://img.youtube.com/vi/${getYoutubeVideoId(link)}/maxresdefault.jpg`
@@ -66,9 +66,11 @@ function Page() {
   return (
     <div className='flex justify-center items-center h-screen flex-wrap'> 
         <div className="flex flex-wrap justify-center">
-          <input className='w-full rounded-md py-1.5 pl-7 pr-20 text-gray-900 ring-1 border-solid border-black border-2  my-3' type="text" onChange={(e) => {setLink(e.target.value); setResult(null)}} />
+          <input className='w-full rounded-md py-1.5 pl-7 pr-20 text-gray-900 ring-1 border-solid border-black border-2  my-3' type="text" 
+            onChange={(e) => {setLink(e.target.value); setResult(null)}} />
           
-          <button className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-300' onClick={getData}>Download</button>
+          <button className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-300' 
+            onClick={getData}>Download</button>
         </div>
         {
           result && result.formats ? 
@@ -95,4 +97,4 @@ function Page() {
   )
 }
 
-export default Page
+export default Youtube
