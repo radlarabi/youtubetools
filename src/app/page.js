@@ -1,43 +1,42 @@
 'use client'
 
-import { useState } from 'react'
-import axios from 'axios'
+
 import Image from 'next/image';
 import FacebookIcon from '../assets/svg/facebook.svg'
 import InstagramIcon from '../assets/svg/instagram.svg'
 import YoutubeIcon from '../assets/svg/youtube.svg'
 
 export default function Home() {
-  const [result, setResult] = useState(null)
-  const getData = () => {
-    axios.get('https://catfact.ninja/fact').then((response) => {
-      setResult(response.data.fact)
-    })
-  }
   return (
+    <div class="flex justify-center items-center h-screen">
     <main>
-      <a href='/Facebook'>
-        <Image 
-          height={50}
-          width={50}
-          src={FacebookIcon} 
-        />
-      </a>
-      <a href='/Youtube'>
-        <Image 
-          height={55}
-          width={50}
-          src={YoutubeIcon} 
-        />
-      </a>
-      <a href='/Instagram'>
-        <Image 
-          height={50}
-          width={50}
-          src={InstagramIcon} 
-        />
-      </a>
+        <a href='/Facebook'>
+          <Image 
+            class="h-55 w-50"
+            height={50}
+            width={50}
+            src={FacebookIcon} 
+            />
+        </a>
+        <a href='/Youtube'>
+            <Image 
+                class="h-55 w-50"
+                height={50}
+                src={YoutubeIcon}
+                alt="Youtube"
+                />
+        </a>
+        <a href='/Instagram'>
+            <Image 
+                class="h-50 w-50"
+                height={50}
+                width={50}
+                src={InstagramIcon}
+                alt="Instagram"
+            />
+        </a>
     </main>
+    </div>
   )
 }
 
