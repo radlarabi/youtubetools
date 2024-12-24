@@ -22,8 +22,10 @@ export default function Home() {
 	const options = {
 		method: 'GET',
 		headers: {
-			'x-rapidapi-key': process.env.X_RAPIDAPI_KEY,
-			'x-rapidapi-host': process.env.X_RAPIDAPI_HOST,
+			// 'x-rapidapi-key': process.env.X_RAPIDAPI_KEY,
+			// 'x-rapidapi-host': process.env.X_RAPIDAPI_HOST,
+			'x-rapidapi-key': 'b6a833b38dmsh59568ba84b92151p16851bjsnb0044221bc34',
+			'x-rapidapi-host': 'linkedin-api8.p.rapidapi.com'
 		}
 	};
   const url = 'https://linkedin-api8.p.rapidapi.com/search-jobs?keywords=' + topic + '&locationId=102787409&datePosted=anyTime&sort=mostRelevant';
