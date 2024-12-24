@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import LoadingSkeleton from '@/component/LoadingSkeleton'
-
+import { ToastContainer, toast } from 'react-toastify';
 // import Image from 'next/image';
 // import FacebookIcon from '../assets/svg/facebook.svg'
 // import InstagramIcon from '../assets/svg/instagram.svg'
@@ -12,10 +12,14 @@ import LoadingSkeleton from '@/component/LoadingSkeleton'
 
 
 export default function Home() {
-  const [topic, setTopic] = useState(null)
-  const [result, setResult] = useState('')
-  const [visited, setVisited] = useState({})
-  const [loading, setLoading] = useState(false)
+	
+	// const [error, setError] = useState(null)
+	const [topic, setTopic] = useState(null)
+	const [result, setResult] = useState('')
+	const [visited, setVisited] = useState({})
+	const [loading, setLoading] = useState(false)
+	const [datePosted, setDatePosted] = useState('anyTime')
+	const [sortPosted, setSortPosted] = useState('mostRelevant')
 
 	console.log(process.env.X_RAPIDAPI_KEY, process.env.X_RAPIDAPI_HOST)
 
@@ -28,17 +32,23 @@ export default function Home() {
 			'x-rapidapi-host': 'linkedin-api8.p.rapidapi.com'
 		}
 	};
-  const url = 'https://linkedin-api8.p.rapidapi.com/search-jobs?keywords=' + topic + '&locationId=102787409&datePosted=anyTime&sort=mostRelevant';
+  const url = 'https://linkedin-api8.p.rapidapi.com/search-jobs?keywords=' + topic + '&locationId=102787409&datePosted='+ datePosted +'&sort=' + sortPosted;
   
   async function getData(){
+	  console.log('click')
+	if (!topic){
+		toast("Search input is required.")
+		return
+	}
 	setLoading(true)
 
     try {
-      const response = await fetch(url, options);
-      const result = await response.json();
-      setResult(result)
-      
-      console.log(result);
+		const response = await fetch(url, options);
+		const result = await response.json();
+		setResult(result)
+		if (!result.data)
+			toast("No result found :(")
+		console.log(result);
 		setLoading(false)
 	} catch (error) {
 		console.error(error);
@@ -61,8 +71,23 @@ export default function Home() {
 				</div>
 				
 				<input onChange={(e) => setTopic(e.target.value)} type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Jobs on Linkedin" required />
-				<button disabled={!topic}  onClick={() => getData()} type="submit" className={` ${!topic ? 'bg-gray-600' : 'bg-blue-500'} text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>Search</button>
 			</div>
+			
+			<label htmlFor="countries" className="my-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Posted time</label>
+			<select onChange={(e) => setDatePosted(e.target.value)} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+				<option value="anyTime" defaultValue>any Time</option>
+				<option value="past24Hours">past 24 Hours</option>
+				<option value="pastWeek">past Week</option>
+				<option value="pastMonth">past Month</option>
+			</select>
+
+			<label htmlFor="countries" className="my-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sort Posts</label>
+			<select onChange={(e) => setSortPosted(e.target.value)} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+				<option value="mostRelevant" defaultValue>most Relevant</option>
+				<option value="mostRecent" >most Recent</option>
+			</select>
+
+			<button onClick={() => getData()} type="submit" className={` ${!topic ? 'bg-gray-600' : 'bg-blue-500'} my-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>Search</button>
 		</div>
 		{
 			loading ? <LoadingSkeleton/> : 
@@ -78,6 +103,7 @@ export default function Home() {
 				}
 			</div>
 		}
+		<ToastContainer />
 	</div>
   )
 }
